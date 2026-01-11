@@ -1,0 +1,20 @@
+#Dependencies
+node_modules/
+
+#Environment Variable
+backend/.env
+
+#Logs
+npm-debug.log
+pnpm-debug.log
+
+#OS Generated files
+.DS-Store
+Thumbs.db
+
+#Editor/IDE settings
+.vscode/
+
+#Build outputs (future)
+build/
+dist/
