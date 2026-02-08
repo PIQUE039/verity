@@ -5,6 +5,7 @@ const cors = require('cors');
 const authRoutes = require('./routes/authRoutes');
 const mongoose = require('mongoose');
 const listingRoutes = require('./routes/listingRoutes')
+const path = require('path');
 
 //CONFIGURATION
 dotenv.config();
@@ -15,6 +16,8 @@ app.use(express.json());
 app.use(cors());
 app.use('/api/auth', authRoutes);
 app.use('/api/listings', listingRoutes);
+app.use('/uploads', express.static('upload'));
+app.use(express.urlencoded({extended:true})); //Helps parse form data.
 
 //ROUTES
 app.get('/',(req,res) => {

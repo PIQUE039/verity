@@ -1,76 +1,55 @@
 import { useState, useEffect } from "react";
 import API from '../api';
+import ListingCard from "../components/Listingcard";
 
 const Home = () =>{
    //MEMORY BOX
    const [listings, setListings] = useState([]);
+   const [loading, setLoading] = useState(true)
 
    //THE TRIGGER: Runs exactly one time when the page loads
    useEffect(() =>{
       const fetchListings = async () =>{
          try{
             console.log('Fetching listings...');
-            const response = await API.get('/listings');
-
-            console.log("Data Recieved:", response.data); //Verify data structure.
-            setListings(response.data); //Update memory box.
+            const {data} = await API.get('/listings');
+            setListings(data); //Update memory box.
          }catch(err){
             console.error("Error fetching listings:",err);
+         }finally{
+            setLoading(false); //Stop loading.
          }
       };
 
       fetchListings(); //Executing the function above.
    },[]);
 
-   return (
-    <div style={{ padding: '20px' }}>
-      <h1>Fresh Recommendations</h1>
-      
-      {/* THE GRID: Creates a responsive layout */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))', gap: '20px' }}>
-        
-        {/* THE LOOP: Takes the data and turns it into HTML */}
-        {listings.map((item) => (
-          <div key={item._id} style={cardStyle}>
-            {/* Placeholder image for now */}
-            <div style={imagePlaceholder}>
-               <span>Image</span>
-            </div>
-            
-            <div style={{ padding: '10px' }}>
-               <h3 style={{ margin: '0 0 10px 0' }}>₹ {item.price}</h3>
-               <p style={{ margin: '0', fontWeight: '500' }}>{item.title}</p>
-               <p style={{ fontSize: '12px', color: 'gray' }}>{item.category}</p>
-               
-               {/* Optional Chaining (?.) protects us if seller data is missing */}
-               <small style={{ display: 'block', marginTop: '10px', color: '#555' }}>
-                  Seller: {item.seller?.name || "Unknown User"}
-               </small>
-            </div>
-          </div>
-        ))}
-      </div>
+   if (loading) return (
+    <div className="flex justify-center items-center h-64">
+      <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-cyan-900"></div>
     </div>
+   );
+
+   return (
+    <main className="bg-slate-50 min-h-screen">
+      <div className="max-w-7xl mx-auto px-4 py-8">
+        <h2 className="text-2xl text-slate-800 font-semibold mb-6">Fresh Recommendations</h2>
+        
+        {/* THE RESPONSIVE GRID */}
+        {listings.length > 0 ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            {listings.map((item) => (
+              <ListingCard key={item._id} item={item} />
+            ))}
+          </div>
+        ) : (
+          <div className="text-center py-20">
+            <p className="text-slate-500 text-lg">No ads found. Be the first to sell something!</p>
+          </div>
+        )}
+      </div>
+    </main>
   );
-};
-
-// BASIC STYLES (We will replace this with Tailwind on Day 7)
-const cardStyle = {
-  border: '1px solid #ddd',
-  borderRadius: '4px',
-  overflow: 'hidden', // Keeps image inside the corners
-  backgroundColor: 'white',
-  boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
-};
-
-const imagePlaceholder = {
-  width: '100%',
-  height: '160px',
-  backgroundColor: '#f0f0f0',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  color: '#888'
 };
 
 export default Home;

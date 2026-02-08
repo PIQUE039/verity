@@ -5,7 +5,7 @@ const listingSchema = new mongoose.Schema({
    description:{type: String, required: true},
    price:{type: Number, required: true},
    category:{type: String, required: true},
-   // images:{type: [String], default: []},
+   images:{type: String},
    //Relationship Link
    seller:{
       type: mongoose.Schema.Types.ObjectId,
@@ -13,6 +13,6 @@ const listingSchema = new mongoose.Schema({
       required: true,
    },
    createdAt:{type: Date, default: Date.now},
-});
+},{timestamps:true});
 
 module.exports = mongoose.model('Listing', listingSchema);
