@@ -9,15 +9,16 @@ const path = require('path');
 
 //CONFIGURATION
 dotenv.config();
+const PORT = process.env.PORT || 5000;
 const app = express();
 
 //MIDDLEWARE
 app.use(express.json());
-app.use(cors());
+app.use(express.urlencoded({extended:true})); //Helps parse form data.
+app.use(cors());  //Restrict origin before production
 app.use('/api/auth', authRoutes);
 app.use('/api/listings', listingRoutes);
-app.use('/uploads', express.static('upload'));
-app.use(express.urlencoded({extended:true})); //Helps parse form data.
+app.use('/uploads', express.static(path.join(__dirname,'uploads')));
 
 //ROUTES
 app.get('/',(req,res) => {
@@ -31,10 +32,9 @@ const connectDB = async() => {
       console.log('Local MongoDB connected successfully');
 
       //starting the server if the connection is successfull
-      const PORT = process.env.PORT || 5000;
-      app.listen(PORT, () => [
-         console.log(`Server is running on prot ${PORT}`)
-      ]);
+      app.listen(PORT, () => {
+         console.log(`Server is running on port ${PORT}`)
+      });
    }catch(error){
       console.error('MongoDB connection failed:',error.message);
       process.exit(1);

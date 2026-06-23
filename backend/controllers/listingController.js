@@ -14,7 +14,7 @@ exports.createListing = async (req, res) =>{
       }
 
       //Multer puts the file into 'req.file'
-      const imagePath = req.file? req.file.path:'';
+      const imagePath = req.file ? req.file.path.replace(/\\/g, '/') : '';
 
       const newListing = new Listing({
          title,
@@ -22,7 +22,7 @@ exports.createListing = async (req, res) =>{
          category,
          description,
          image:imagePath,
-         seller: req.user   //seller: req.user.id
+         seller: req.user
       });
 
       const savedListing = await newListing.save();
@@ -47,7 +47,7 @@ exports.getListings = async (req, res) =>{
 exports.getListingById = async (req, res) => {
    try {
       const { id } = req.params;
-      const listing = await Listing.findById(id).populate('seller', 'name email');
+      const listing = await Listing.findById(id).populate('seller', 'name');
 
       if (!listing) {
          return res.status(404).json({ message: "Product not found in Database" });

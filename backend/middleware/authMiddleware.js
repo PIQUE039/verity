@@ -17,12 +17,12 @@ const protect = (req, res, next) =>{
 
          next(); //moving to the actual logic (the controller)
       }catch(error){
-         res.status(401).json({message:"Not authorized"});
+         return res.status(401).json({message:"Not authorized"});
       }
    }
 
    if(!token){
-      res.status(401).json({message:"No token, authorized denied"});
+      res.status(401).json({message:"No token, authorization denied"});
    }
 };
 
