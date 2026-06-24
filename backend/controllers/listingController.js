@@ -9,10 +9,6 @@ exports.createListing = async (req, res) =>{
       }
       const {title, description, price, category} = req.body;
 
-      if(!req.file){
-         console.log('No file received in req.file');
-      }
-
       //Multer puts the file into 'req.file'
       const imagePath = req.file ? req.file.path.replace(/\\/g, '/') : '';
 
@@ -25,8 +21,7 @@ exports.createListing = async (req, res) =>{
          seller: req.user
       });
 
-      const savedListing = await newListing.save();
-      console.log('Listing Saved Successfully:', savedListing._id);
+      await newListing.save();
       res.status(201).json(newListing);
    }catch(error){
       console.error("Detailed server error:", error);
@@ -47,7 +42,7 @@ exports.getListings = async (req, res) =>{
 exports.getListingById = async (req, res) => {
    try {
       const { id } = req.params;
-      const listing = await Listing.findById(id).populate('seller', 'name');
+      const listing = await Listing.findById(id).populate('seller', 'name createdAt');
 
       if (!listing) {
          return res.status(404).json({ message: "Product not found in Database" });
