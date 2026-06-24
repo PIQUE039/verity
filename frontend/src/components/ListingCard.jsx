@@ -3,8 +3,7 @@ import { Link } from 'react-router-dom';
 
 const ListingCard = ({ item }) => {
 
-  const imageUrl = item.image ? `http://localhost:5000/${item.image}`: null;
-
+const imageUrl = item.image ? `${import.meta.env.VITE_API_URL}/${item.image}` : null;
 
   return (
     <Link to={`/listing/${item._id}`} className="group">

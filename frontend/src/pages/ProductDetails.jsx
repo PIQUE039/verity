@@ -12,7 +12,6 @@ const ProductDetails = ()=>{
       const fetchProduct = async () => {
          try{
             const {data} = await API.get(`/listings/${id}`);
-            console.log("Single Product Data:", data);   //temp debugging
             setListing(data);
          }catch(err){
             console.error("Error fetching product:", err);
@@ -32,9 +31,16 @@ const ProductDetails = ()=>{
          
          {/* LEFT COLUMN: Image & Description (2/3 width) */}
          <div className="lg:col-span-2 space-y-4">
-            <div className="bg-black rounded-lg h-[500px] flex items-center justify-center text-white overflow-hidden shadow-lg">
-               {/* Placeholder for real images */}
-               <span className="text-xl font-bold tracking-widest opacity-50 uppercase">Product Image</span>
+            <div className="bg-black rounded-lg h-[500px] flex items-center justify-center overflow-hidden shadow-lg">
+               {listing.image ? (
+                  <img
+                     src={`${import.meta.env.VITE_API_URL}/${listing.image}`}
+                     alt={listing.title}
+                     className="w-full h-full object-contain"
+                  />
+                  ) : (
+                  <span className="text-xl font-bold tracking-widest opacity-50 uppercase text-white">No Image</span>
+               )}
             </div>
             <div className="bg-white p-6 rounded-lg shadow-sm border border-slate-200">
                <h2 className="text-2xl font-bold text-slate-800 mb-4 uppercase tracking-tight">Description</h2>
@@ -68,7 +74,9 @@ const ProductDetails = ()=>{
                </div>
                <div>
                   <p className="font-bold text-slate-900">{listing.seller?.name || "Verified User"}</p>
-                  <p className="text-xs text-slate-500 italic">Member since Feb 2026</p>
+                  <p className="text-xs text-slate-500 italic">
+                     Member since {new Date(listing.seller?.createdAt).toLocaleDateString('en-IN', {month:'long', year:'numeric'})}
+                  </p>
                </div>
                </div>
                

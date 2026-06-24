@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import API from '../api';
-import ListingCard from "../components/Listingcard";
+import ListingCard from "../components/ListingCard";
 
 const Home = () =>{
    //MEMORY BOX
