@@ -1,10 +1,16 @@
 import { useState } from "react";
 import API from '../api';
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 const Login = () =>{
+
+   const { login } = useAuth();
+
    //Keeping track of what user types.
    const [formData, setFormData] = useState({email:'',password:''});
+   const [error, setError] = useState('');
+   const [loading, setLoading] = useState(false);
 
    const navigate = useNavigate();
 
@@ -19,18 +25,17 @@ const Login = () =>{
    //submit action
    const handleSubmit = async (e) => {
       e.preventDefault();
+      setLoading(true);
       try{
          //Using the agent to post data
          const {data} = await API.post('/auth/login', formData);
-
-         //saving the token
-         localStorage.setItem('token', data.token);
-
-         alert('Login Successful!');
+         login(data.user, data.token);
          navigate('/');
       }catch(err){
-         alert('Login Failed. Check console for details.');
+         setError('Invalid email or password.');
          console.error(err);
+      }finally{
+         setLoading(false);
       }
    };
 
@@ -38,6 +43,7 @@ const Login = () =>{
    return(
       <div>
          <h2>Login</h2>
+         {error && <p className="text-red-500 text-sm">{error}</p>}
          <form onSubmit={handleSubmit}>
             <input 
             type="email" 
@@ -51,7 +57,9 @@ const Login = () =>{
             placeholder="Password" 
             onChange={handleChange} 
             />
-         <button type="submit">Login</button>
+         <button type="submit" disabled={loading}>
+            {loading ? "Logging in...": "Login"}
+         </button>
          </form>
       </div>
    );
