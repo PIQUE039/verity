@@ -43,6 +43,8 @@ const Navbar = () => {
               <Link to="/add" className="flex items-center gap-1 bg-white border-4 border-t-yellow-400 border-l-cyan-400 border-r-blue-400 border-b-yellow-700 px-4 py-1 rounded-full shadow-md hover:bg-slate-50 transition-all">
                 <span className="text-xl">+</span> SELL
               </Link>
+              <Link to="/my-listings" className="hover:underline">My Ads</Link>
+
             </>
           ) : (
             <>

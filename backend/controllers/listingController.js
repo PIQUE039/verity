@@ -53,3 +53,13 @@ exports.getListingById = async (req, res) => {
       res.status(500).json({ message: "Server Error: Invalid ID format" });
    }
 };
+
+exports.getMyListings = async (req, res) => {
+   try {
+      const listings = await Listing.find({ seller: req.user })
+                                    .sort({ createdAt: -1 });
+      res.status(200).json(listings);
+   } catch (error) {
+      res.status(500).json({ message: "Error fetching your listings" });
+   }
+};

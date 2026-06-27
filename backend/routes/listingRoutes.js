@@ -2,7 +2,7 @@ const express = require('express');
 const multer = require('multer');
 const path = require('path');
 const router = express.Router();
-const {createListing, getListings, getListingById} = require('../controllers/listingController');
+const {createListing, getListings, getListingById, getMyListings} = require('../controllers/listingController');
 const {protect} = require('../middleware/authMiddleware');
 
 //Multer configuration
@@ -20,6 +20,7 @@ const upload = multer({storage:storage});
 
 router.get('/', getListings);
 router.post('/', protect, upload.single('image'), createListing);
+router.get('/my', protect, getMyListings);
 router.get('/:id', getListingById);
 
 module.exports = router;
