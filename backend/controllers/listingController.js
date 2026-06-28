@@ -63,3 +63,26 @@ exports.getMyListings = async (req, res) => {
       res.status(500).json({ message: "Error fetching your listings" });
    }
 };
+
+exports.deleteListing = async (req, res) => {
+   try{
+      const { id } = req.params;
+      const listing = await Listing.findById(id);
+      
+      if(!listing){
+         return res.status(404).json({message:"Listing not found"});
+      }
+
+      //ownership check
+      if(listing.seller.toString() !== req.user){
+         return res.status(403).json({message:"You are not the owner of this listing."});
+      }
+
+      //deleting
+      await Listing.findByIdAndDelete(id);
+      res.status(200).json({message:"Listing deleted successfully"});
+
+   }catch(error){
+      res.status(500).json({message:"Error deleting listing"});
+   }
+};

@@ -24,10 +24,21 @@ const MyListings = () => {
    if(loading) return <div className="p-10 text-center">Loading your ads...</div>;
    if(error) return <div className="p-10 text-center text-red-500">{error}</div>;
 
+   const handleDelete = async (id) => {
+      if(!window.confirm("Are you sure you want to delete this listing ?")) return;
+
+      try{
+         await API.delete(`/listings/${id}`);
+         setListings(listings.filter(listing => listing._id !== id));
+      }catch(err){
+         setError("Failed to delete the listing");
+      }
+   }
+
    return(
       <div className="max-w-4xl mx-auto px-4 py-8">
          <h1 className="text-2xl font-bold text-slate-800 mb-6">My Ads</h1>
-         {listings.lenth === 0 ? (
+         {listings.length === 0 ? (
             <div className="text-center py-20">
                <p className="text-slate-500">You haven't posted any ads yet.</p>
                <Link to="/add" className="text-cyan-900 font-bold hover:underline mt-2 inline-block">
@@ -53,6 +64,11 @@ const MyListings = () => {
                         className="text-sm text-cyan-900 font-bold hover:underline">
                            View
                      </Link>
+                     <button
+                        onClick={() => handleDelete(listing._id)}
+                        className="text-sm text-red-500 font-bold hover:underline">
+                        Delete
+                     </button>
                   </div>
                ))}
             </div>
