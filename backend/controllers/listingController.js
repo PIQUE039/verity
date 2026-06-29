@@ -9,8 +9,7 @@ exports.createListing = async (req, res) =>{
       }
       const {title, description, price, category} = req.body;
 
-      //Multer puts the file into 'req.file'
-      const imagePath = req.file ? req.file.path.replace(/\\/g, '/') : '';
+      const imagePath = req.file ? req.file.path : '';
 
       const newListing = new Listing({
          title,

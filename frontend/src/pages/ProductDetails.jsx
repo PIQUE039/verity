@@ -34,7 +34,7 @@ const ProductDetails = ()=>{
             <div className="bg-black rounded-lg h-[500px] flex items-center justify-center overflow-hidden shadow-lg">
                {listing.image ? (
                   <img
-                     src={`${import.meta.env.VITE_API_URL}/${listing.image}`}
+                     src={listing.image}
                      alt={listing.title}
                      className="w-full h-full object-contain"
                   />

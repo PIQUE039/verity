@@ -1,6 +1,8 @@
 // IMPORTING DEPENDENCIES
-const express = require('express');
 const dotenv = require('dotenv');
+dotenv.config();
+
+const express = require('express');
 const cors = require('cors');
 const authRoutes = require('./routes/authRoutes');
 const mongoose = require('mongoose');
@@ -8,7 +10,6 @@ const listingRoutes = require('./routes/listingRoutes')
 const path = require('path');
 
 //CONFIGURATION
-dotenv.config();
 const PORT = process.env.PORT || 5000;
 const app = express();
 

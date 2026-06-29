@@ -3,25 +3,17 @@ import { Link } from 'react-router-dom';
 
 const ListingCard = ({ item }) => {
 
-const imageUrl = item.image ? `${import.meta.env.VITE_API_URL}/${item.image}` : null;
-
   return (
     <Link to={`/listing/${item._id}`} className="group">
       <div className="bg-white border border-slate-200 rounded overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300 relative">
         
         {/* IMAGE AREA */}
         <div className="w-full h-44 bg-slate-100 flex items-center justify-center text-slate-400">
-          {/* <span className="text-xs uppercase tracking-widest font-bold">No Image</span> */}
-          {imageUrl?(
-            <img src={imageUrl} alt={item.title} className="w-full h-full object-cover"/>
+          {item.image?(
+            <img src={item.image} alt={item.title} className="w-full h-full object-cover"/>
           ):(
             <div className="w-full h-full flex items-center justify-center text-slate-400 font-bold uppercase text-xs">No Photo</div>
           )}
-          
-          {/* FEATURED BADGE
-          <div className="absolute top-2 left-2 bg-yellow-400 text-[10px] font-bold px-2 py-0.5 rounded shadow-sm">
-            FEATURED
-          </div> */}
         </div>
 
         {/* DETAILS AREA */}

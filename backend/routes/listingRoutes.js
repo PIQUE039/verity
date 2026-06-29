@@ -1,22 +1,11 @@
 const express = require('express');
-const multer = require('multer');
-const path = require('path');
 const router = express.Router();
+const multer = require('multer');
+const { storage } = require('../config/cloudinary');
 const {createListing, getListings, getListingById, getMyListings, deleteListing} = require('../controllers/listingController');
 const {protect} = require('../middleware/authMiddleware');
 
-//Multer configuration
-const storage = multer.diskStorage({
-   destination:(req,file,cb)=>{
-      cb(null, 'uploads/');
-   },
-   filename:(req, file, cb) => {
-      cb(null, Date.now() + '-' + file.originalname);
-   }
-});
-
-const upload = multer({storage:storage});
-// ---
+const upload = multer({storage});
 
 router.get('/', getListings);
 router.post('/', protect, upload.single('image'), createListing);

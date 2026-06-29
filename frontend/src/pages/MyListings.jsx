@@ -50,7 +50,7 @@ const MyListings = () => {
                {listings.map((listing) => (
                   <div key={listing._id} className="bg-white border border-slate-200 rounded-lg p-4 flex gap-4 items-center shadow-sm">
                      <img 
-                        src={`${import.meta.env.VITE_API_URL}/${listing.image}`} 
+                        src={listing.image}
                         alt={listing.title}
                         className="w-24 h-24 object-cover rounded" 
                      />
