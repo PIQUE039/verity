@@ -31,11 +31,25 @@ exports.createListing = async (req, res) =>{
 
 exports.getListings = async (req, res) =>{
    try{
-      //**.populate() joins the user data with lisitng data**
-      const listings = await Listing.find().populate('seller','name');
+      const { search , category } = req.query;
+
+      const query = {};
+
+      if(search){
+         query.$or =[
+            { title: {$regex: search, $options: 'i'}},
+            { description: {$regex: search, $options: 'i'}}
+         ];
+      }
+
+      if(category){
+         query.category = category;
+      }
+
+      const listings = await Listing.find(query).populate('seller', 'name');
       res.status(200).json(listings);
    }catch(error){
-      res.status(500).json({message:"Error fetching listings"});
+      res.status(500).json({message: "Error fetching listings"});
    }
 };
 

@@ -1,11 +1,19 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { useState } from 'react';
 
 const Navbar = () => {
   
   const { user, token, logout } = useAuth();
-
   const navigate = useNavigate();
+  const [searchTerm, setSearchTerm] = useState('');
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    if(searchTerm.trim()){
+      navigate(`/?search=${searchTerm.trim()}`);
+    }
+  };
 
   const handleLogout = () => {
     logout();
@@ -22,16 +30,17 @@ const Navbar = () => {
         </Link>
 
         {/* SEARCH BAR PLACEHOLDER  */}
-        <div className="hidden md:flex flex-1 mx-10">
-          <input 
-            type="text" 
-            placeholder="Search cars, mobile phones and more..." 
-            className="w-full border-2 border-cyan-900 px-4 py-2 rounded-l focus:outline-none"
-          />
-          <button className="bg-cyan-900 text-white px-6 py-2 rounded-r">
-             🔍
-          </button>
-        </div>
+        <form onSubmit={handleSearch} className="hidden md:flex flex-1 mx-10">
+          <input
+            type="text"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            placeholder="Search cars, mobile phones and more..."
+            className="w-full border-2 border-cyan-900 px-4 py-2 rounded-l focus:outline-none"/>
+          <button type="submit" className="bg-cyan-900 text-white px-6  py-2 rounded-r">
+              🔍
+        </button>
+        </form>
 
         {/* ACTION BUTTONS */}
         <div className="flex items-center gap-6 font-semibold text-cyan-900">
