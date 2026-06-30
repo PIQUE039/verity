@@ -30,9 +30,8 @@ app.get('/',(req,res) => {
 const connectDB = async() => {
    try{
       await mongoose.connect(process.env.MONGO_URI);
-      console.log('Local MongoDB connected successfully');
+      console.log('MongoDB Atlas connected successfully');
 
-      //starting the server if the connection is successfull
       app.listen(PORT, () => {
          console.log(`Server is running on port ${PORT}`)
       });
