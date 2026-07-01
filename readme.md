@@ -2,7 +2,7 @@
 
 A full-stack classified ads marketplace where users can post, browse, search, and save secondhand listings.
 
-**Live Demo:** [verity-app.vercel.app](https://olx-clone-teal.vercel.app)
+**Live Demo:** [olx-clone-teal.vercel.app](https://olx-clone-teal.vercel.app)
 
 ---
 
