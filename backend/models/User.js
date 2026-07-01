@@ -17,7 +17,11 @@ const userSchema = new mongoose.Schema({
    createdAt:{
       type: Date,
       default: Date.now,
-   }
+   },
+   savedListings: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Listing'
+   }]
 });
 
 module.exports = mongoose.model('User', userSchema);

@@ -30,7 +30,7 @@ exports.register = async (req,res) => {
    }catch(error){
       res.status(500).json({message:'Server Error',error: error.message});
    }
-}
+};
 
 //LOGIN LOGIC
 exports.login = async(req, res) => {
@@ -65,4 +65,33 @@ exports.login = async(req, res) => {
    }catch(error){
       res.status(500).json({message:'Server Error', error: error.message});
    }
+
+};
+
+exports.toggleSavedListing = async (req, res) => {
+      try{
+         const { id } = req.params;
+         const user = await User.findById(req.user);
+
+         //Checking if the lisitng is already saved in the DB 
+         const alreadySaved = user.savedListings.some(
+            savedId => savedId.toString() === id
+         ); 
+
+         //If it's already saved than deleting it from saved (toggle behaviour) else adding it to save
+         if(alreadySaved){
+            user.savedListings = user.savedListings.filter(
+               savedId => savedId.toString() !== id
+            );
+         }else{
+            user.savedListings.push(id);
+         }
+
+         //saving the change in mongoDB
+         await user.save();
+         res.status(200).json({savedListings: user.savedListings});
+
+      }catch(error) {
+         res.status(500).json({message: "Error updating saved listings"});
+      }
 };
