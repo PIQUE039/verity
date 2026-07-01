@@ -60,7 +60,7 @@ exports.login = async(req, res) => {
       res.status(200).json({
          message:'Login Successfull.',
          token:token,
-         user:{id: user._id, name: user.name, email: user.email}
+         user:{id: user._id, name: user.name, email: user.email, savedListings: user.savedListings}
       })
    }catch(error){
       res.status(500).json({message:'Server Error', error: error.message});
@@ -94,4 +94,13 @@ exports.toggleSavedListing = async (req, res) => {
       }catch(error) {
          res.status(500).json({message: "Error updating saved listings"});
       }
+};
+
+exports.getSavedListings = async (req, res) => {
+   try {
+      const user = await User.findById(req.user).populate('savedListings');
+      res.status(200).json(user.savedListings);
+   } catch (error) {
+      res.status(500).json({ message: "Error fetching saved listings" });
+   }
 };

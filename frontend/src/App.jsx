@@ -7,6 +7,7 @@ import AddListing from './pages/AddListing';
 import ProductDetails from './pages/ProductDetails';
 import MyListings from './pages/MyListings';
 import ProtectedRoute from './components/ProtectedRoute';
+import SavedListings from './pages/SavedListings';
 
 function App(){
   return(
@@ -27,6 +28,11 @@ function App(){
               <MyListings/>
             </ProtectedRoute>
           }/>
+        <Route path="/saved" element={
+          <ProtectedRoute>
+            <SavedListings/>
+          </ProtectedRoute>
+        }></Route>
       </Routes>
     </Router>
   );
