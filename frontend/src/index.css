@@ -1,1 +1,41 @@
 @import "tailwindcss";
+
+@theme {
+  /* Harbor Teal Palette */
+  --color-brand-primary: #14464D;
+  --color-brand-accent: #E08E45;
+  --color-brand-dark: #0D2F34;
+
+  /* Surfaces */
+  --color-surface-page: #F6F8F7;
+  --color-surface-card: #FFFFFF;
+  --color-surface-muted: #DCE3E1;
+
+  /* Text */
+  --color-text-primary: #161616;
+  --color-text-secondary: #5A6A68;
+  --color-text-muted: #8A9A98;
+
+  /* Semantic */
+  --color-danger: #DC2626;
+  --color-success: #16A34A;
+
+  /* Typography */
+  --font-sans: 'Plus Jakarta Sans', sans-serif;
+
+  /* Border radius */
+  --radius-card: 12px;
+  --radius-pill: 999px;
+}
+
+/* Base styles */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--color-surface-page);
+  color: var(--color-text-primary);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
