@@ -36,8 +36,8 @@ const Home = () => {
   }, [search, category]);
 
   if (loading) return (
-    <div className="flex justify-center items-center h-64">
-      <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-brand-primary"></div><br/>
+    <div className="flex flex-col justify-center items-center h-64">
+      <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-brand-primary"></div>
       <h1 className="text-lg font-bold">Waking up the server... Our backend takes a few seconds to spin up on the free tier. Thanks for your patience!</h1>
     </div>
   );
