@@ -52,8 +52,8 @@ A valid JWT proves authentication, not ownership. The delete controller compares
 
 ```bash
 # Clone the repo
-git clone https://github.com/PIQUE039/olx-clone.git
-cd olx-clone
+git clone https://github.com/PIQUE039/verity.git
+cd verity
 
 # Backend
 cd backend
@@ -109,7 +109,7 @@ VITE_API_URL=http://localhost:5000
 ## Project Structure
 
 ```
-olx-clone/
+verity/
 ├── backend/
 │   ├── config/
 │   │   └── cloudinary.js
